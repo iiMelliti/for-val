@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For Val (Judy)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Raleway:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- MOBILE CORE STYLES --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #2e192d; /* Deep space black */
+            overflow: hidden; /* No scrolling allowed */
+            font-family: 'Raleway', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* The animated starry background */
+        .space-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            animation: moveSpace 120s linear infinite;
+            z-index: -1;
+            opacity: 0.8;
+        }
+        
+        @keyframes moveSpace {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100%); }
+        }
+
+        /* --- THE SLIDES (STORY FORMAT) --- */
+        .slide-container {
+            width: 85%;
+            height: 80%;
+            position: relative;
+            text-align: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            opacity: 0; /* Hidden by default */
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* The slide currently being shown */
+        .active-slide {
+            opacity: 1;
+            pointer-events: all;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Animation for slide exiting */
+        .exit-slide {
+            opacity: 0;
+            transform: translate(-50%, -60%) scale(0.9); /* Moves up and shrinks slightly */
+        }
+
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, #f46fd3, #f489ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(215, 122, 209, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+        }
+
+        p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            font-weight: 300;
+            text-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: #ee65f8;
+            font-size: 1.8rem;
+            display: block;
+            margin-top: 20px;
+        }
+
+        /* The hint at the bottom */
+        .tap-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; transform: translateY(-5px); }
+        }
+        
+        /* Final Heart button */
+        .final-heart {
+            font-size: 5rem;
+            margin-top: 30px;
+            color: #ed128e;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="space-bg"></div>
+
+    <div class="slide-container" id="story-container">
+        
+        <div class="slide active-slide">
+            <h1>Judas</h1>
+            <div class="subtitle">My Universe</div>
+        </div>
+
+        <div class="slide">
+            <p>There are 8 billion people in this world, but somehow, you are the only one who makes sense.</p>
+        </div>
+
+        <div class="slide">
+             <p>You have this energy—a mix of chaos and peace—that I can’t get enough of.</p>
+        </div>
+
+        <div class="slide">
+            <p>I don’t just love you for who you are; I love who I become when I am with you.</p>
+        </div>
+        
+        <div class="slide">
+            <p>You are my favorite notification, my best distraction, and the only person I want to tell everything to.</p>
+        </div>
+
+        <div class="slide">
+            <p>Val, simply put...</p>
+            <span class="highlight">You are magic, i love you </span>
+             <div class="final-heart">♥</div>
+        </div>
+
+    </div>
+
+    <div class="tap-hint" id="hintText">Tap screen to continue</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const hintText = document.getElementById('hintText');
+        const totalSlides = slides.length;
+
+        // Listen for a tap anywhere on the screen
+        document.body.addEventListener('click', nextSlide);
+        document.body.addEventListener('touchstart', nextSlide);
+
+        function nextSlide() {
+            // If we are on the last slide, do nothing
+            if (currentSlide >= totalSlides - 1) return;
+
+            // Prepare current slide for exit animation
+            slides[currentSlide].classList.remove('active-slide');
+            slides[currentSlide].classList.add('exit-slide');
+            
+            // Move to next slide
+            currentSlide++;
+            
+            // Bring in the next slide shortly after
+            setTimeout(() => {
+                 slides[currentSlide].classList.add('active-slide');
+                 
+                 // Hide the "Tap to continue" hint on the final slide
+                 if (currentSlide === totalSlides - 1) {
+                     hintText.style.display = 'none';
+                 }
+            }, 100); // Slight delay for smoother transition effect
+        }
+
+    </script>
+
+</body>
+</html>
